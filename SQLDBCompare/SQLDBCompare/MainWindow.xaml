@@ -5,8 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQLDBCompare"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="SQLDBCompare" ResizeMode="NoResize" Height="560" Width="840">
     <Grid>
-        
+        <TabControl x:Name="tabControl" Margin="0">
+            <TabItem x:Name="connectTab" Header="Connect" Width="100">
+                <Grid Background="#FFE5E5E5">
+                    <Label x:Name="db1HeaderLabel" Content="Connect to Database 1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+                    <Label x:Name="db1HostLabel" Content="Host:" HorizontalAlignment="Left" Margin="31,39,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="db1Host" HorizontalAlignment="Left" Height="23" Margin="114,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <Label x:Name="db1PortLabel" Content="Port:" HorizontalAlignment="Left" Margin="31,67,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="db1Port" HorizontalAlignment="Left" Height="23" Margin="114,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <Label x:Name="db1UserrnameLabel" Content="Username:" HorizontalAlignment="Left" Margin="31,93,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="db1Username" HorizontalAlignment="Left" Height="23" Margin="114,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <Label x:Name="db1PasswordLabel" Content="Password:" HorizontalAlignment="Left" Margin="31,119,0,0" VerticalAlignment="Top"/>
+                    <PasswordBox x:Name="db1Password" HorizontalAlignment="Left" Margin="114,121,0,0" VerticalAlignment="Top" Width="218" Height="21"/>
+                    <Button x:Name="testConnect" Content="Test Connection" HorizontalAlignment="Left" Margin="114,147,0,0" VerticalAlignment="Top" Width="152"/>
+                    <Label x:Name="db1DatabaseLabel" Content="Database:" HorizontalAlignment="Left" Margin="31,170,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="db1UseDatabase" HorizontalAlignment="Left" Margin="114,172,0,0" VerticalAlignment="Top" Width="218"/>
+                    <Button x:Name="connectDatabase1" Content="Use Database" HorizontalAlignment="Left" Margin="114,199,0,0" VerticalAlignment="Top" Width="152"/>
+
+
+                    <Label x:Name="db2HeaderLabel" Content="Connect to Database 2" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+                    <Label x:Name="db2HostLabel" Content="Host:" HorizontalAlignment="Left" Margin="31,260,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="db2Host" HorizontalAlignment="Left" Height="23" Margin="114,262,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <Label x:Name="db2PortLabel" Content="Port:" HorizontalAlignment="Left" Margin="31,287,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="db2Port" HorizontalAlignment="Left" Height="23" Margin="114,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <Label x:Name="db2UserrnameLabel" Content="Username:" HorizontalAlignment="Left" Margin="31,313,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="db2Username" HorizontalAlignment="Left" Height="23" Margin="114,314,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <Label x:Name="db2PasswordLabel" Content="Password:" HorizontalAlignment="Left" Margin="31,339,0,0" VerticalAlignment="Top"/>
+                    <PasswordBox x:Name="db2Password" HorizontalAlignment="Left" Margin="114,341,0,0" VerticalAlignment="Top" Width="218" Height="21"/>
+                    <Button x:Name="db2testConnect" Content="Test Connection" HorizontalAlignment="Left" Margin="114,367,0,0" VerticalAlignment="Top" Width="152"/>
+                    <Label x:Name="db2DatabaseLabel" Content="Database:" HorizontalAlignment="Left" Margin="31,390,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="db2UseDatabase" HorizontalAlignment="Left" Margin="114,392,0,0" VerticalAlignment="Top" Width="218"/>
+                    <Button x:Name="connectDatabase2" Content="Use Database" HorizontalAlignment="Left" Margin="114,419,0,0" VerticalAlignment="Top" Width="152"/>
+                    <TextBox x:Name="db1Status" Height="185" Margin="386,0,20,270" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True" VerticalAlignment="Bottom"/>
+                    <TextBox x:Name="db2Status" Height="185" Margin="386,260,20,50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True" VerticalAlignment="Bottom"/>
+                    <Button x:Name="compareButton" Content="Compare" HorizontalAlignment="Right" Margin="0,0,20,10" VerticalAlignment="Bottom" Width="130" Height="30"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="compareTab" Header="Compare" Width="100" IsEnabled="False">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
