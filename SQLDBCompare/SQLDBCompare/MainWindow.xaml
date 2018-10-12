@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQLDBCompare"
         mc:Ignorable="d"
-        Title="SQLDBCompare" ResizeMode="NoResize" Height="560" Width="840">
+        Title="SQLDBCompare" ResizeMode="NoResize" Height="560" Width="840" Visibility="Visible">
     <Grid>
         <TabControl x:Name="tabControl" Margin="0">
             <TabItem x:Name="connectTab" Header="Connect" Width="100">
@@ -41,10 +41,17 @@
                     <TextBox x:Name="db1Status" Height="185" Margin="386,0,20,270" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True" VerticalAlignment="Bottom"/>
                     <TextBox x:Name="db2Status" Height="185" Margin="386,260,20,50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True" VerticalAlignment="Bottom"/>
                     <Button x:Name="compareButton" Content="Compare" HorizontalAlignment="Right" Margin="0,0,20,10" VerticalAlignment="Bottom" Width="130" Height="30"/>
+                    <ProgressBar x:Name="progressBar" Height="5" Margin="0,0,0,2" VerticalAlignment="Bottom" Value="23" Visibility="Hidden"/>
+                    <Label x:Name="label" Content="Progress 0.99 % " Margin="0,485,0,-10" HorizontalContentAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" FontSize="10"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="compareTab" Header="Compare" Width="100" IsEnabled="False">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem x:Name="compareTab" Header="Compare" Width="100" FontSize="10">
+                <Grid Background="#FFE5E5E5">
+                    <Label x:Name="db1CompareLabel" Content="255.255.255.255,12345 [Database Name Example]" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="330" FontWeight="Bold" FontSize="12"/>
+                    <Label x:Name="db2CompareLabel" Content="255.255.255.255,12345 [Database Name Example]" HorizontalAlignment="Left" Margin="410,10,0,0" VerticalAlignment="Top" Width="330" FontWeight="Bold" FontSize="12"/>
+                    <DataGrid x:Name="db1CompareGrid" HorizontalAlignment="Left" Margin="10,41,0,10" Width="400"/>
+                    <DataGrid x:Name="db2CompareGrid" HorizontalAlignment="Left" Margin="410,41,0,10" Width="400"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
