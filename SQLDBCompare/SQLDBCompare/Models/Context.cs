@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SQLDBCompare.Models
 {
@@ -38,6 +39,66 @@ namespace SQLDBCompare.Models
             }
         }
 
+        Boolean _Compare;
+        public Boolean Compare
+        {
+            get
+            {
+                return _Compare;
+            }
+            set
+            {
+                _Compare = value;
+                OnPropertyChanged("Compare");
+            }
+
+        }
+
+
+        String _CompareButton;
+        public String CompareButton
+        {
+            get
+            {
+                return _CompareButton;
+            }
+            set
+            {
+                _CompareButton = value;
+                OnPropertyChanged("CompareButton");
+            }
+
+        }
+
+        Visibility _Processing;
+        public Visibility Processing
+        {
+            get
+            {
+                return _Processing;
+            }
+            set
+            {
+                _Processing = value;
+                OnPropertyChanged("Processing");
+            }
+
+        }
+
+        Boolean _CompareTab;
+        public Boolean CompareTab
+        {
+            get
+            {
+                return _CompareTab;
+            }
+            set
+            {
+                _CompareTab = value;
+                OnPropertyChanged("CompareTab");
+            }
+
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string property)

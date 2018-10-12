@@ -37,6 +37,8 @@ namespace SQLDBCompare.Models
         }
 
 
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string property)
         {

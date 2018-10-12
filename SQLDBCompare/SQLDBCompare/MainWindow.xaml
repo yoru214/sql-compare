@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQLDBCompare"
+        xmlns:util="clr-namespace:SQLDBCompare.Utils"
         mc:Ignorable="d"
         Title="SQLDBCompare" ResizeMode="NoResize" Height="560" Width="840" Visibility="Visible">
     <Grid>
@@ -14,38 +15,41 @@
                     <Label x:Name="db1HostLabel" Content="Host:" HorizontalAlignment="Left" Margin="31,39,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="db1Host" HorizontalAlignment="Left" Height="23" Margin="114,42,0,0" Text="{Binding Path=Database1.Host,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
                     <Label x:Name="db1PortLabel" Content="Port:" HorizontalAlignment="Left" Margin="31,67,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="db1Port" HorizontalAlignment="Left" Height="23" Margin="114,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <TextBox x:Name="db1Port" HorizontalAlignment="Left" Height="23" Margin="114,68,0,0" Text="{Binding Path=Database1.Port,UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
                     <Label x:Name="db1UserrnameLabel" Content="Username:" HorizontalAlignment="Left" Margin="31,93,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="db1Username" HorizontalAlignment="Left" Height="23" Margin="114,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <TextBox x:Name="db1Username" HorizontalAlignment="Left" Height="23" Margin="114,94,0,0" Text="{Binding Path=Database1.User,UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
                     <Label x:Name="db1PasswordLabel" Content="Password:" HorizontalAlignment="Left" Margin="31,119,0,0" VerticalAlignment="Top"/>
-                    <PasswordBox x:Name="db1Password" HorizontalAlignment="Left" Margin="114,121,0,0" VerticalAlignment="Top" Width="218" Height="21"/>
+                    <PasswordBox  x:Name="db1Password"  HorizontalAlignment="Left" Margin="114,121,0,0" VerticalAlignment="Top" Width="218" Height="21"  PreviewKeyUp="db1Password_PreviewKeyUp" />
                     <Button x:Name="testConnect" Content="Test Connection" HorizontalAlignment="Left" Margin="114,147,0,0" VerticalAlignment="Top" Width="152" Click="testConnect_Click" />
                     <Label x:Name="db1DatabaseLabel" Content="Database:" HorizontalAlignment="Left" Margin="31,170,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="db1UseDatabase" HorizontalAlignment="Left" Margin="114,172,0,0" VerticalAlignment="Top" Width="218"  IsEnabled="{Binding Path= Database1.Connected,UpdateSourceTrigger=PropertyChanged}" />
-                    <Button x:Name="connectDatabase1" Content="Use Database" HorizontalAlignment="Left" Margin="114,199,0,0"   IsEnabled="{Binding Database1.Connected,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="152"/>
+                    <ComboBox x:Name="db1UseDatabase" HorizontalAlignment="Left" DisplayMemberPath="Name" Margin="114,172,0,0" VerticalAlignment="Top" Width="218" ItemsSource="{Binding Path=Database1.Database,UpdateSourceTrigger=PropertyChanged}"  IsEnabled="{Binding Path= Database1.Connected,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="db1UseDatabase_SelectionChanged" />
+                    <Button x:Name="connectDatabase1" Content="Use Database" HorizontalAlignment="Left" Margin="114,199,0,0"   IsEnabled="{Binding Database1.Use,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Width="152" Click="connectDatabase1_Click" />
 
 
                     <Label x:Name="db2HeaderLabel" Content="Connect to Database 2" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
-                    <Label x:Name="db2HostLabel" Content="Host:" HorizontalAlignment="Left" Margin="31,260,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="db2Host" HorizontalAlignment="Left" Height="23" Margin="114,262,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <Label x:Name="db2HostLabel" Content="Host:" HorizontalAlignment="Left" Margin="31,260,0,0"  VerticalAlignment="Top"/>
+                    <TextBox x:Name="db2Host" HorizontalAlignment="Left" Height="23" Margin="114,262,0,0"  Text="{Binding Path=Database2.Host,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
                     <Label x:Name="db2PortLabel" Content="Port:" HorizontalAlignment="Left" Margin="31,287,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="db2Port" HorizontalAlignment="Left" Height="23" Margin="114,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <TextBox x:Name="db2Port" HorizontalAlignment="Left" Height="23" Margin="114,288,0,0" Text="{Binding Path=Database2.Port,UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
                     <Label x:Name="db2UserrnameLabel" Content="Username:" HorizontalAlignment="Left" Margin="31,313,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="db2Username" HorizontalAlignment="Left" Height="23" Margin="114,314,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <TextBox x:Name="db2Username" HorizontalAlignment="Left" Height="23" Margin="114,314,0,0"  Text="{Binding Path=Database2.User,UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
                     <Label x:Name="db2PasswordLabel" Content="Password:" HorizontalAlignment="Left" Margin="31,339,0,0" VerticalAlignment="Top"/>
-                    <PasswordBox x:Name="db2Password" HorizontalAlignment="Left" Margin="114,341,0,0" VerticalAlignment="Top" Width="218" Height="21"/>
-                    <Button x:Name="db2testConnect" Content="Test Connection" HorizontalAlignment="Left" Margin="114,367,0,0" VerticalAlignment="Top" Width="152"/>
+                    <PasswordBox x:Name="db2Password" HorizontalAlignment="Left" Margin="114,341,0,0" VerticalAlignment="Top" Width="218" Height="21" PreviewKeyUp="db2Password_PreviewKeyUp" />
+                    <Button x:Name="db2testConnect" Content="Test Connection" HorizontalAlignment="Left" Margin="114,367,0,0" VerticalAlignment="Top" Width="152" Click="db2testConnect_Click" />
                     <Label x:Name="db2DatabaseLabel" Content="Database:" HorizontalAlignment="Left" Margin="31,390,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="db2UseDatabase" HorizontalAlignment="Left" Margin="114,392,0,0" VerticalAlignment="Top" Width="218"/>
-                    <Button x:Name="connectDatabase2" Content="Use Database" HorizontalAlignment="Left" Margin="114,419,0,0" VerticalAlignment="Top" Width="152"/>
-                    <TextBox x:Name="db1Status" Height="185" Margin="386,0,20,270" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True" VerticalAlignment="Bottom"/>
-                    <TextBox x:Name="db2Status" Height="185" Margin="386,260,20,50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True" VerticalAlignment="Bottom"/>
-                    <Button x:Name="compareButton" Content="Compare" HorizontalAlignment="Right" Margin="0,0,20,10" VerticalAlignment="Bottom" Width="130" Height="30"/>
-                    <ProgressBar x:Name="progressBar" Height="5" Margin="0,0,0,2" VerticalAlignment="Bottom" Value="23" Visibility="Hidden"/>
-                    <Label x:Name="label" Content="Progress 0.99 % " Margin="0,485,0,-10" HorizontalContentAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" FontSize="10"/>
+                    <ComboBox x:Name="db2UseDatabase" HorizontalAlignment="Left" DisplayMemberPath="Name" Margin="114,392,0,0" VerticalAlignment="Top" Width="218"  ItemsSource="{Binding Path=Database2.Database,UpdateSourceTrigger=PropertyChanged}"  IsEnabled="{Binding Path= Database2.Connected,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="db2UseDatabase_SelectionChanged" />
+                    <Button x:Name="connectDatabase2" Content="Use Database" HorizontalAlignment="Left" Margin="114,419,0,0"   IsEnabled="{Binding Database2.Use,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Width="152" Click="connectDatabase2_Click" />
+                    
+                    
+                    
+                    <TextBox x:Name="db1Status" Height="185" Margin="386,0,20,270" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True"  Text="{Binding Path=Database1.Status,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom"/>
+                    <TextBox x:Name="db2Status" Height="185" Margin="386,260,20,50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True"  Text="{Binding Path=Database2.Status,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom"/>
+                    <Button x:Name="compareButton" Content="{Binding CompareButton,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,0,20,10" VerticalAlignment="Bottom" Width="130" Height="30"  IsEnabled="{Binding Compare,UpdateSourceTrigger=PropertyChanged}" Click="compareButton_Click" />
+                    <ProgressBar x:Name="progressBar" Height="5" Margin="0,0,0,2" VerticalAlignment="Bottom" Value="23" Visibility="{Binding Processing,UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label x:Name="label" Content="Progress 0.99 % " Margin="0,0,0,-5" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Visibility="{Binding Processing,UpdateSourceTrigger=PropertyChanged}" FontSize="10"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="compareTab" Header="Compare" Width="100" FontSize="10">
+            <TabItem x:Name="compareTab" Header="Compare" Width="100" FontSize="10" IsEnabled="{Binding CompareTab,UpdateSourceTrigger=PropertyChanged}">
                 <Grid Background="#FFE5E5E5">
                     <Label x:Name="db1CompareLabel" Content="255.255.255.255,12345 [Database Name Example]" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="330" FontWeight="Bold" FontSize="12"/>
                     <Label x:Name="db2CompareLabel" Content="255.255.255.255,12345 [Database Name Example]" HorizontalAlignment="Left" Margin="410,10,0,0" VerticalAlignment="Top" Width="330" FontWeight="Bold" FontSize="12"/>
