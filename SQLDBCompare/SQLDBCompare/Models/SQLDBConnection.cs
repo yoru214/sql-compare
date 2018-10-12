@@ -151,10 +151,7 @@ namespace SQLDBCompare.Models
                 }
 
                 System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(this._ConnectionString);
-
-
-
-
+                
                 con.Open();
                 con.Close();
 
@@ -189,6 +186,7 @@ namespace SQLDBCompare.Models
 
                 foreach (System.Data.DataRow dRow in dat_set.Tables[0].Rows)
                 {
+                    
                     this._Database.Add(new SQLDatabase() { Name = dRow["Name"].ToString(), IsSelected = false });
                 }
             }

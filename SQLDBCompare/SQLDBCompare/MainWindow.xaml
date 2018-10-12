@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:SQLDBCompare"
         xmlns:util="clr-namespace:SQLDBCompare.Utils"
         mc:Ignorable="d"
-        Title="SQLDBCompare" ResizeMode="NoResize" Height="560" Width="840" Visibility="Visible">
-    <Grid>
+        Title="SQLDBCompare" ResizeMode="NoResize" Height="560" Width="840" Visibility="Visible" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="mainGrid">
         <TabControl x:Name="tabControl" Margin="0">
             <TabItem x:Name="connectTab" Header="Connect" Width="100">
                 <Grid Background="#FFE5E5E5">

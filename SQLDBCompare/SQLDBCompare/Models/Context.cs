@@ -53,8 +53,7 @@ namespace SQLDBCompare.Models
             }
 
         }
-
-
+        
         String _CompareButton;
         public String CompareButton
         {
