@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLDBCompare.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,20 @@ namespace SQLDBCompare
     /// </summary>
     public partial class MainWindow : Window
     {
+        Context Data = new Context();
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Data.Database1.Host = "database1host";
+
+
+            this.DataContext = this.Data;
+        }
+
+        private void testConnect_Click(object sender, RoutedEventArgs e)
+        {
+            //this.Data.Database1.Connected = true;
         }
     }
 }

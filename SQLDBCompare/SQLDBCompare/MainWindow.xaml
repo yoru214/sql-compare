@@ -12,17 +12,17 @@
                 <Grid Background="#FFE5E5E5">
                     <Label x:Name="db1HeaderLabel" Content="Connect to Database 1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
                     <Label x:Name="db1HostLabel" Content="Host:" HorizontalAlignment="Left" Margin="31,39,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="db1Host" HorizontalAlignment="Left" Height="23" Margin="114,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+                    <TextBox x:Name="db1Host" HorizontalAlignment="Left" Height="23" Margin="114,42,0,0" Text="{Binding Path=Database1.Host,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
                     <Label x:Name="db1PortLabel" Content="Port:" HorizontalAlignment="Left" Margin="31,67,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="db1Port" HorizontalAlignment="Left" Height="23" Margin="114,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
                     <Label x:Name="db1UserrnameLabel" Content="Username:" HorizontalAlignment="Left" Margin="31,93,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="db1Username" HorizontalAlignment="Left" Height="23" Margin="114,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
                     <Label x:Name="db1PasswordLabel" Content="Password:" HorizontalAlignment="Left" Margin="31,119,0,0" VerticalAlignment="Top"/>
                     <PasswordBox x:Name="db1Password" HorizontalAlignment="Left" Margin="114,121,0,0" VerticalAlignment="Top" Width="218" Height="21"/>
-                    <Button x:Name="testConnect" Content="Test Connection" HorizontalAlignment="Left" Margin="114,147,0,0" VerticalAlignment="Top" Width="152"/>
+                    <Button x:Name="testConnect" Content="Test Connection" HorizontalAlignment="Left" Margin="114,147,0,0" VerticalAlignment="Top" Width="152" Click="testConnect_Click" />
                     <Label x:Name="db1DatabaseLabel" Content="Database:" HorizontalAlignment="Left" Margin="31,170,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="db1UseDatabase" HorizontalAlignment="Left" Margin="114,172,0,0" VerticalAlignment="Top" Width="218"/>
-                    <Button x:Name="connectDatabase1" Content="Use Database" HorizontalAlignment="Left" Margin="114,199,0,0" VerticalAlignment="Top" Width="152"/>
+                    <ComboBox x:Name="db1UseDatabase" HorizontalAlignment="Left" Margin="114,172,0,0" VerticalAlignment="Top" Width="218"  IsEnabled="{Binding Path= Database1.Connected,UpdateSourceTrigger=PropertyChanged}" />
+                    <Button x:Name="connectDatabase1" Content="Use Database" HorizontalAlignment="Left" Margin="114,199,0,0"   IsEnabled="{Binding Database1.Connected,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="152"/>
 
 
                     <Label x:Name="db2HeaderLabel" Content="Connect to Database 2" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
