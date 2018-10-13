@@ -28,8 +28,10 @@ namespace SQLDBCompare
         Boolean hasError = false;
 
         private readonly System.ComponentModel.BackgroundWorker testDB1 = new System.ComponentModel.BackgroundWorker();
+        private readonly System.ComponentModel.BackgroundWorker connectDB1 = new System.ComponentModel.BackgroundWorker();
 
         private readonly System.ComponentModel.BackgroundWorker testDB2 = new System.ComponentModel.BackgroundWorker();
+        private readonly System.ComponentModel.BackgroundWorker connectDB2 = new System.ComponentModel.BackgroundWorker();
 
         public MainWindow()
         {
@@ -49,9 +51,13 @@ namespace SQLDBCompare
 
             testDB1.DoWork += testDB1_DoWork;
             testDB1.RunWorkerCompleted += testDB1_RunWorkerCompleted;
+            connectDB1.DoWork += connectDB1_DoWork;
+            connectDB1.RunWorkerCompleted += connectDB1_RunWorkerCompleted;
 
             testDB2.DoWork += testDB2_DoWork;
             testDB2.RunWorkerCompleted += testDB2_RunWorkerCompleted;
+            connectDB2.DoWork += connectDB2_DoWork;
+            connectDB2.RunWorkerCompleted += connectDB2_RunWorkerCompleted;
 
 
             this.DataContext = this.Data;
@@ -94,26 +100,10 @@ namespace SQLDBCompare
 
         private void connectDatabase1_Click(object sender, RoutedEventArgs e)
         {
+            mainGrid.IsEnabled = false;
             this.Data.Processing = Visibility.Visible;
             this.Data.Compare = false;
-            if (this.Data.Database1.Connect())
-            {
-                this.Data.Database1.Use = true;
-                this.Data.Database1.Status += "Connected to " + this.Data.Database1.Host + ", " + this.Data.Database1.Port + " [" + this.Data.Database1.Database.FirstOrDefault(o => o.IsSelected).Name + "]";
-                this.Data.Database1.Status += Environment.NewLine;
-                this.Data.Database1.Use = false;
-                this.Data.Database1.Ready = true;
-
-                if (this.Data.Database2.Ready)
-                {
-                    this.Data.Compare = true;
-                }
-            }
-            else
-            {
-                MessageBox.Show(this.Data.Database1.ErrorMessage, "CONNECTION ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            this.Data.Processing = Visibility.Hidden;
+            connectDB1.RunWorkerAsync();
         }
 
         private void db2Password_PreviewKeyUp(object sender, KeyEventArgs e)
@@ -139,48 +129,17 @@ namespace SQLDBCompare
 
         private void connectDatabase2_Click(object sender, RoutedEventArgs e)
         {
+            mainGrid.IsEnabled = false;
             this.Data.Processing = Visibility.Visible;
             this.Data.Compare = false;
-            if (this.Data.Database2.Connect())
-            {
-                this.Data.Database2.Use = true;
-                this.Data.Database2.Status += "Connected to " + this.Data.Database2.Host + ", " + this.Data.Database2.Port + " [" + this.Data.Database2.Database.FirstOrDefault(o => o.IsSelected).Name + "]";
-                this.Data.Database2.Status += Environment.NewLine;
-                this.Data.Database2.Use = false;
-                this.Data.Database2.Ready = true;
+            connectDB2.RunWorkerAsync();
 
-                if (this.Data.Database1.Ready)
-                {
-                    this.Data.Compare = true;
-                }
-            }
-            else
-            {
-                MessageBox.Show(this.Data.Database2.ErrorMessage, "CONNECTION ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            this.Data.Processing = Visibility.Hidden;
 
         }
 
         private void db2testConnect_Click(object sender, RoutedEventArgs e)
         {
             testDB2.RunWorkerAsync();
-            //this.Data.Processing = Visibility.Visible;
-            //this.Data.Compare = false;
-
-            //this.Data.Database2.Database = new List<SQLDatabase>();
-            //this.Data.Database2.Use = false;
-            //this.Data.Database2.Connected = false;
-            //if (this.Data.Database2.Connect() == true)
-            //{
-            //    this.Data.Database2.Connected = true;
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show(this.Data.Database2.ErrorMessage, "CONNECTION ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //this.Data.Processing = Visibility.Hidden;
         }
 
         private void compareButton_Click(object sender, RoutedEventArgs e)
@@ -239,7 +198,33 @@ namespace SQLDBCompare
             mainGrid.IsEnabled = true;
         }
 
+        private void connectDB1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            if (this.Data.Database1.Connect())
+            {
+                this.Data.Database1.Use = true;
+                this.Data.Database1.Status += "Connected to " + this.Data.Database1.Host + ", " + this.Data.Database1.Port + " [" + this.Data.Database1.Database.FirstOrDefault(o => o.IsSelected).Name + "]";
+                this.Data.Database1.Status += Environment.NewLine;
+                this.Data.Database1.Use = false;
+                this.Data.Database1.Ready = true;
 
+                if (this.Data.Database2.Ready)
+                {
+                    this.Data.Compare = true;
+                }
+            }
+            else
+            {
+                hasError = true;
+                ErrorMessage = this.Data.Database1.ErrorMessage;
+            }
+        }
+        private void connectDB1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            mainGrid.IsEnabled = true;
+            this.Data.Processing = Visibility.Hidden;
+
+        }
 
         // worker for Geographical Tab
         private void testDB2_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -270,6 +255,34 @@ namespace SQLDBCompare
             ErrorPrompt();
             this.Data.Processing = Visibility.Hidden;
             mainGrid.IsEnabled = true;
+        }
+
+        private void connectDB2_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            if (this.Data.Database2.Connect())
+            {
+                this.Data.Database2.Use = true;
+                this.Data.Database2.Status += "Connected to " + this.Data.Database2.Host + ", " + this.Data.Database2.Port + " [" + this.Data.Database2.Database.FirstOrDefault(o => o.IsSelected).Name + "]";
+                this.Data.Database2.Status += Environment.NewLine;
+                this.Data.Database2.Use = false;
+                this.Data.Database2.Ready = true;
+
+                if (this.Data.Database1.Ready)
+                {
+                    this.Data.Compare = true;
+                }
+            }
+            else
+            {
+                hasError = true;
+                ErrorMessage = this.Data.Database2.ErrorMessage;
+            }
+
+        }
+        private void connectDB2_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            mainGrid.IsEnabled = true;
+            this.Data.Processing = Visibility.Hidden;
         }
     }
 }
