@@ -51,10 +51,47 @@
             </TabItem>
             <TabItem x:Name="compareTab" Header="Compare" Width="100" FontSize="10" IsEnabled="{Binding CompareTab,UpdateSourceTrigger=PropertyChanged}">
                 <Grid Background="#FFE5E5E5">
-                    <Label x:Name="db1CompareLabel" Content="255.255.255.255,12345 [Database Name Example]" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="330" FontWeight="Bold" FontSize="12"/>
-                    <Label x:Name="db2CompareLabel" Content="255.255.255.255,12345 [Database Name Example]" HorizontalAlignment="Left" Margin="410,10,0,0" VerticalAlignment="Top" Width="330" FontWeight="Bold" FontSize="12"/>
-                    <DataGrid x:Name="db1CompareGrid" HorizontalAlignment="Left" Margin="10,41,0,10" Width="400"/>
-                    <DataGrid x:Name="db2CompareGrid" HorizontalAlignment="Left" Margin="410,41,0,10" Width="400"/>
+                    <Label x:Name="db1CompareLabel" Content="{Binding DB1Details, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="330" FontWeight="Bold" FontSize="12"/>
+                    <Label x:Name="db2CompareLabel" Content="{Binding DB2Details, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="410,10,0,0" VerticalAlignment="Top" Width="330" FontWeight="Bold" FontSize="12"/>
+                    <TreeView x:Name="db1CompareGrid" HorizontalAlignment="Left" ItemsSource="{Binding CompareTables,UpdateSourceTrigger=PropertyChanged}" Margin="10,41,0,10" Width="400">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}">
+                                <Setter Property="FontWeight" Value="Normal" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Fields}">
+                                <TextBlock Text="{Binding TableName1}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+
+                    <!--<DataGrid x:Name="db2CompareGrid" HorizontalAlignment="Left" Margin="410,41,0,10" Width="400"/>-->
+
+                    <TreeView x:Name="db2CompareGrid" HorizontalAlignment="Left" ItemsSource="{Binding CompareTables,UpdateSourceTrigger=PropertyChanged}"  Margin="410,41,0,10" Width="400">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}">
+                                <Setter Property="FontWeight" Value="Normal" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Fields}">
+                                <TextBlock Text="{Binding TableName2}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
                 </Grid>
             </TabItem>
         </TabControl>

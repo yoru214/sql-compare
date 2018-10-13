@@ -193,6 +193,54 @@ namespace SQLDBCompare.Models
             OnPropertyChanged("Database");
         }
 
+        public System.Data.DataSet getTables()
+        {
+            System.Data.DataSet ds = new System.Data.DataSet();
+
+            String sqlQuery = "SELECT Table_name as 'TableName' FROM Information_schema.Tables WHERE Table_type = 'BASE TABLE' and Objectproperty (Object_id(Table_name), 'IsMsShipped') = 0";
+
+            using (System.Data.DataSet dat_set = new System.Data.DataSet())
+            {
+                using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(this._ConnectionString))
+                {
+                    con.Open();
+                    using (System.Data.SqlClient.SqlDataAdapter da_1 = new System.Data.SqlClient.SqlDataAdapter(sqlQuery, con))
+                    {
+                        da_1.Fill(dat_set, "Table_Data_1");
+                    }
+                }
+                ds = dat_set;
+            }
+
+            return ds;
+        }
+
+        public List<SQLFields> getFields(String TableName)
+        {
+            List<SQLFields> fields = new List<SQLFields>();
+
+            String sqlQuery = "SELECT ORDINAL_POSITION, COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + TableName + "'";
+
+            using (System.Data.DataSet dat_set = new System.Data.DataSet())
+            {
+                using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(this._ConnectionString))
+                {
+                    con.Open();
+                    using (System.Data.SqlClient.SqlDataAdapter da_1 = new System.Data.SqlClient.SqlDataAdapter(sqlQuery, con))
+                    {
+                        da_1.Fill(dat_set, "Table_Data_1");
+                    }
+                }
+                //ds = dat_set;
+                foreach (System.Data.DataRow dRow in dat_set.Tables[0].Rows)
+                {
+                    fields.Add(new SQLFields() { FieldName = dRow["COLUMN_NAME"].ToString(), FieldType = dRow["DATA_TYPE"].ToString(), FieldLength = dRow["CHARACTER_MAXIMUM_LENGTH"].ToString(), IsNullable = dRow["CHARACTER_MAXIMUM_LENGTH"].ToString() });
+                }
+            }
+
+            return fields;
+        }
+
         public String getConnectionString()
         {
             return this._ConnectionString;
